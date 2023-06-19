@@ -9,6 +9,9 @@ For large images we store both `url` and [`blurhash`][blurhash] strings.
 # `users`
 
 - `primary_email` (text, index)
+- `primary_email_confirmation_code` (smallint, optional)
+  - 5 digits
+  - is confirmed when this is null
 - `salt` (char 16)
 - `pwd`
   - bcrypt(`salt` + raw pwd)
@@ -20,6 +23,12 @@ For large images we store both `url` and [`blurhash`][blurhash] strings.
   - used in URLs
 - `bio` (text, optional)
 - `avatar_url` (text, optional)
+
+# `auth_tokens`
+
+- `value` (char 64, unique)
+- `user_id` (fk)
+- `created_at` (timestamp)
 
 # `user_kvs`
 
@@ -132,6 +141,10 @@ These tags are assumed for a streamer when they select a category.
 - `cumulative` (int)
   - number of months the user has subscribed in total
   - ie. how many times have we charged the user
+- `last_subscribed_at` (timestamp)
+  - when the user last subscribed
+- `last_charged_at` (timestamp)
+  - when the user was last charged
 - `created_at` (timestamp)
   - when the user subscribed for the first time
 
